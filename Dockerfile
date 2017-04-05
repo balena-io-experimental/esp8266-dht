@@ -18,7 +18,7 @@ WORKDIR /usr/src/app
 RUN mkdir -p /assets
 
 # Set the board
-ENV BOARD huzzah
+ENV BOARD nodemcuv2
 
 # Copy config files to the working directory
 COPY platformio.ini ./

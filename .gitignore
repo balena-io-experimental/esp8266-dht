@@ -27,3 +27,11 @@
 *.exe
 *.out
 *.app
+
+# Editor tmp files
+*.swo
+*.swp
+
+# PlatformIO stuff
+.pioenvs
+.piolibdeps
