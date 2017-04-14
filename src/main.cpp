@@ -88,7 +88,7 @@ void transmit() {
 
   Serial.println("transmitting");
 
-  snprintf(payload, 375, "{\"temperature\": %s, \"humidity\": %s, \"device\": {\"id\": \"%s\"}, \"apiVersion\": \"2.0.0\"}", tmp, hum, chipId);
+  snprintf(payload, 375, "{\"temperature\": %s, \"humidity\": %s, \"ray\": true, \"device\": {\"id\": \"%s\"}, \"apiVersion\": \"2.0.0\"}", tmp, hum, chipId);
 
   Serial.print(topic);
   Serial.print(" ");
