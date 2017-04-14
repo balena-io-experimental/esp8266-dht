@@ -15,7 +15,7 @@
 #define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
 #define INTERVAL 15000
 
-const char* applicationUUID = "327853";
+const char* applicationUUID = "336066";
 const char* ssid = "resin-hotspot";
 const char* password = "resin-hotspot";
 const char* mqtt_server = "iot.eclipse.org";
@@ -88,7 +88,7 @@ void transmit() {
 
   Serial.println("transmitting");
 
-  snprintf(payload, 375, "{\"temperature\": %s, \"humidity\": %s, \"device\": \"%s\"}", tmp, hum, chipId);
+  snprintf(payload, 375, "{\"temperature\": %s, \"humidity\": %s, \"device\": {\"id\": \"%s\"}, \"apiVersion\": \"2.0.0\"}", tmp, hum, chipId);
 
   Serial.print(topic);
   Serial.print(" ");
