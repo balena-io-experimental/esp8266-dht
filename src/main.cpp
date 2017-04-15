@@ -40,9 +40,9 @@ char msg[50];
 // as the current DHT reading algorithm adjusts itself to work on faster procs.
 DHT dht(DHTPIN, DHTTYPE);
 
-void reconnect() {
+bool reconnect() {
   if (client.connected()) {
-    return;
+    return true;
   }
 
   Serial.print("Attempting MQTT connection...");
@@ -54,11 +54,13 @@ void reconnect() {
   // Attempt to connect
   if (client.connect(clientId.c_str())) {
     Serial.println("Connected to MQTT gateway");
-    return;
+    return true;
   }
 
   Serial.print("failed, rc=");
   Serial.print(client.state());
+
+  return false;
 }
 
 void readSensor() {
@@ -141,25 +143,26 @@ void setup(void) {
   httpServer.begin();
 
   reconnect();
-
 }
 
 void loop(void) {
   if (WiFi.isConnected() == true) {
     digitalWrite(2, LOW);
+
+    if (new_reading == true) {
+      // only try to reconnect when there's a new reading
+      if (reconnect()) {
+        digitalWrite(LED_BUILTIN, LOW);
+        delay(100);
+        transmit();
+        digitalWrite(LED_BUILTIN, HIGH);
+      }
+    }
   } else {
     // turn the LED off
     digitalWrite(2, HIGH);
   }
 
-  if (new_reading == true) {
-    // only try to reconnect when there's a new reading
-    digitalWrite(LED_BUILTIN, LOW);
-    delay(100);
-    reconnect();
-    digitalWrite(LED_BUILTIN, HIGH);
-    transmit();
-  }
 
   long now = millis();
   if (now - lastMsg > INTERVAL) {
