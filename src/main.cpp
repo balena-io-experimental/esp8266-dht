@@ -90,7 +90,7 @@ void transmit() {
 
   Serial.println("transmitting");
 
-  snprintf(payload, 88, "{\"kind\": \"humidity\": %s, \"device\": {\"id\": \"%s\"}, \"apiVersion\": \"3.0.0\"}", hum, chipId);
+  snprintf(payload, 88, "{\"kind\":\"humidity\",\"value\":%s,\"device\":{\"id\":\"%s\"},\"apiVersion\":\"3.0.0\"}", hum, chipId);
 
   Serial.print(topic);
   Serial.print(" ");
