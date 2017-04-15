@@ -86,11 +86,19 @@ void readSensor() {
 }
 
 void transmit() {
-  char payload[375];
+  char payload[88];
 
   Serial.println("transmitting");
 
-  snprintf(payload, 375, "{\"temperature\": %s, \"humidity\": %s, \"ray\": true, \"device\": {\"id\": \"%s\"}, \"apiVersion\": \"2.0.0\"}", tmp, hum, chipId);
+  snprintf(payload, 88, "{\"kind\": \"humidity\": %s, \"device\": {\"id\": \"%s\"}, \"apiVersion\": \"3.0.0\"}", hum, chipId);
+
+  Serial.print(topic);
+  Serial.print(" ");
+  Serial.println(payload);
+
+  client.publish(topic, payload);
+
+  snprintf(payload, 88, "{\"kind\":\"temperature\",\"value\":%s,\"device\":{\"id\":\"%s\"},\"apiVersion\":\"3.0.0\"}", tmp, chipId);
 
   Serial.print(topic);
   Serial.print(" ");
